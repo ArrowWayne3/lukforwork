@@ -1,0 +1,269 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>LurkForWork</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- You can add your styles and scripts here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/global.css" />
+</head>
+<body>
+    
+   <!-- Login Form -->
+   <div id="login-form" class="card mb-3">
+        <div class="card-body">
+            <h2 class="card-title">Login</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="login-email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="login-email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="login-password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <div class="mt-3 text-center">
+                    <button type="button" id="register-btn" class="btn btn-link">Not registered? Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="register-form" class="card" style="display: none;">
+        <div class="card-body">
+            <h2 class="card-title">Register</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="register-email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="register-email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="register-name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="register-password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirm-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <div class="mt-3 text-center">
+                    <button type="button" class="btn btn-link" id="login-instead-btn">Login instead</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="src/main.js"></script>
+
+    <!-- Custom Bootstrap Modal -->
+    <div class="modal fade" id="passwordMismatchModal" tabindex="-1" aria-labelledby="passwordMismatchLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="passwordMismatchLabel">Password Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                Passwords do not match!
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Home page -->
+    <div id="home-page" style="display: none;" class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Your Feed</h2>
+            <button id="view-profile-btn" class="btn btn-secondary">View Profile</button>
+            <button id="logout-btn" class="btn btn-danger">Logout</button>
+        </div>
+        <div id="feed-container">
+            
+        </div>
+    </div>
+
+
+
+    <!-- Likes Modal -->
+    <div class="modal fade" id="likesModal" tabindex="-1" aria-labelledby="likesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="likesModalLabel">Users Who Liked This Job</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="likesModalBody">
+                    <!-- The list of user names will be added here dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Modal -->
+    <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="commentsModalLabel">Comments</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="commentsModalBody">
+            <!-- Comments will be injected here dynamically -->
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <!-- Profile Page -->
+    <div id="profile-page" style="display: none;" class="container mt-4">
+        <button id="back-to-feed-btn" class="btn btn-secondary mb-3">Back to Feed</button>
+        <h2>User Profile</h2>
+  
+        <div id="no-image-box" style="display: none;">
+            <div style="width: 150px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                <p>No profile pic</p>
+            </div>
+        </div>
+
+        <button id="edit-profile-btn" class="btn btn-info mb-3" style="display: none;">Edit Profile</button>
+        <button id="add-job-btn" class="btn btn-primary mb-3 " style="display: none;">Add Job</button>
+        <button id="watch-toggle-btn" class="btn btn-outline-primary mb-3">Watch</button>
+        
+        <div id="profile-info" class="card mb-3">
+            <div class="card-body">
+                <img id="profile-image" src="" alt="User image" class="img-thumbnail mb-2" style="max-width: 150px; display: none;">
+                <h5 id="profile-name" class="card-title"></h5>
+                <p id="profile-email" class="card-text"></p>
+                <div id="profile-watched-by" class="mt-3">
+                    <h6>Watched By (<span id="watched-by-count">0</span>):</h6>
+                    <ul id="watched-by-list" class="list-unstyled">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    
+        <h4 id="posts-by-user-heading">Posts:</h4>
+        <div id="profile-jobs-container">
+        </div>
+    </div >
+
+  <!-- Edit Profile Page -->
+    <div id="edit-profile-page" style="display: none;" class="container mt-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">Edit Profile</h4>
+                <form id="profile-form" class="form">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile-image" class="form-label">Profile Image:</label>
+                        <input type="file" id="profile-image" name="profile-image" class="form-control">
+                    </div>
+                    <button type="button" id="submitProfileChange" class="btn btn-primary">Update</button>
+                    <!-- Cancel Button -->
+                    <button type="button" id="cancelEditButton" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Add Job Page -->
+    <div id="add-job-page" style="display: none;" class="container mt-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">Add New Job</h4>
+                <form id="job-form" class="form">
+                    <div class="mb-3">
+                        <label for="job-title" class="form-label">Job Title:</label>
+                        <input type="text" id="job-title" name="job-title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile-start" class="form-label">Start Date and Time:</label>
+                        <input type="datetime-local" id="profile-start" name="profile-start" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="job-description" class="form-label">Description:</label>
+                        <textarea id="job-description" name="job-description" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="job-image" class="form-label">Upload Image:</label>
+                        <input type="file" id="job-image" name="job-image" class="form-control">
+                    </div>
+                    <button type="button" id="submitJob" class="btn btn-primary">Submit Job</button>
+                    <!-- Cancel Button -->
+                    <button type="button" id="cancelJobButton" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- edit job Page -->
+    <div class="container mt-4" style="display: none;" id="edit-job-page">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">Edit Job</h4>
+                <form id="edit-job-form" class="form">
+
+                    <div class="mb-3" style="display: none;">
+                        <input type="text" id="edit-job-Id" name="job-Id" class="form-control" required>
+                    </div>
+                    <div class="mb-3" style="display: none;">
+                        <input type="text" id="job-current-image" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit-job-title" class="form-label">Job Title:</label>
+                        <input type="text" id="edit-job-title" name="job-title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-profile-start" class="form-label">Start Date and Time:</label>
+                        <input type="datetime-local" id="edit-profile-start" name="profile-start" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-job-description" class="form-label">Description:</label>
+                        <textarea id="edit-job-description" name="job-description" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-job-image" class="form-label">Upload Image(leave,blank if do not want to change ):</label>
+                        <input type="file" id="edit-job-image" name="job-image" class="form-control">
+                    </div>
+                    <button type="button" id="updateJob" class="btn btn-primary">Update Job</button>
+                    <button type="button" id="cancelEditJob" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
